@@ -1,13 +1,13 @@
 // Select elements
-const image = document.querySelector('.image');
+const image = document.querySelector('.image'); // Directly selects the <img> element
 const userName = document.querySelector('.user-name');
 const details = document.querySelector('.details');
 const ageBtn = document.querySelector('.age');
 const emailBtn = document.querySelector('.email');
 const phoneBtn = document.querySelector('.phone');
-const getUserBtn = document.querySelector('.get-user');
+const getUserBtn = document.querySelector('#getUser');
 
-let currentUser = {}; // Store the current user details
+let currentUser = {}; // Store current user details
 
 // Fetch user from API
 async function fetchUser() {
@@ -19,15 +19,20 @@ async function fetchUser() {
         // Store user details
         currentUser = {
             name: `${user.name.first} ${user.name.last}`,
-            image: user.picture.large,
+            image: user.picture.large, // ✅ Set the image from response
             age: user.dob.age,
             email: user.email,
             phone: user.phone
         };
 
-        // Display user name & image
-        image.style.backgroundImage = `url(${currentUser.image})`;
+        // Display user name
         userName.textContent = currentUser.name;
+
+        // Display user image ✅ (Directly updates the <img> src attribute)
+        image.src = currentUser.image;
+        image.alt = `Picture of ${currentUser.name}`;
+
+        // Reset additional details
         details.textContent = 'Click a button to see details';
     } catch (error) {
         console.error('Error fetching user:', error);
